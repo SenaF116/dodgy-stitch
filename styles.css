@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #1a1a1a;
+    font-family: Arial, sans-serif;
+}
+
+.game-container {
+    position: relative;
+}
+
+#gameCanvas {
+    border: 2px solid #fff;
+    background-color: #000;
+}
+
+.ui {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 20px;
+}
+
+.hearts-container {
+    display: flex;
+    gap: 10px;
+}
+
+.heart {
+    width: 20px;
+    height: 20px;
+    background-color: #ff0000;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+}
+
+.coin {
+    width: 20px;
+    height: 20px;
+    background-color: #ffd700;
+    border-radius: 50%;
+}
