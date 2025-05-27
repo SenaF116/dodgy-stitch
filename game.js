@@ -7,11 +7,39 @@ const COINS_FOR_AMMO = 10;
 const BULLET_SPEED = 5;
 const ALIEN_SHIP_SPEED = 2;
 
+// Preload sounds with error handling
+const sounds = {
+    bullet: new Audio('audio/bullet-shoot.mp3'),
+    stitchCry: new Audio('audio/stitch-cry.mp3')
+};
+
+// Set sound volume
+sounds.bullet.volume = 0.5;
+sounds.stitchCry.volume = 0.8;
+
+// Add error handling for sounds
+sounds.bullet.onerror = () => {
+    console.error('Bullet sound failed to load');
+    // Fallback to default sound
+    sounds.bullet = new Audio('audio/default-sound.mp3');
+};
+
+sounds.stitchCry.onerror = () => {
+    console.error('Stitch cry sound failed to load');
+    // Fallback to default sound
+    sounds.stitchCry = new Audio('audio/default-sound.mp3');
+};
+
+// Add success logging
+sounds.bullet.oncanplaythrough = () => console.log('Bullet sound loaded successfully');
+sounds.stitchCry.oncanplaythrough = () => console.log('Stitch cry sound loaded successfully');
+
 canvas.width = 800;
 canvas.height = 600;
 
 // Preload images
 const images = {
+    background: new Image(),
     stitch: new Image(),
     alien: new Image(),
     heart: new Image(),
@@ -19,8 +47,9 @@ const images = {
 };
 
 // Load images with error handling
+images.background.src = 'images/space-background.jpg';
 images.stitch.src = 'images/stitch.png';
-images.alien.src = 'images/aliens.png'; // Changed from alien.png to aliens.png
+images.alien.src = 'images/aliens.png';
 images.heart.src = 'images/heart.png';
 images.bullet.src = 'images/bullet.png';
 
@@ -101,6 +130,7 @@ function update() {
             hearts--;
             if (hearts <= 0) {
                 gameRunning = false;
+                sounds.stitchCry.play(); // Play Stitch cry sound
                 alert('Game Over! Final Score: ' + score);
             }
             bullets.splice(index, 1);
@@ -128,6 +158,7 @@ function update() {
             height: 10
         };
         bullets.push(bullet);
+        sounds.bullet.play(); // Play bullet sound
     }
     
     // Move stitch
@@ -137,7 +168,8 @@ function update() {
 
 // Draw game elements
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Draw background
+    ctx.drawImage(images.background, 0, 0, canvas.width, canvas.height);
     
     // Draw alien ship
     ctx.drawImage(images.alien, alienShip.x, alienShip.y, alienShip.width, alienShip.height);
@@ -191,4 +223,3 @@ document.addEventListener('keyup', (e) => {
 window.addEventListener('load', () => {
     gameLoop();
 });
-
