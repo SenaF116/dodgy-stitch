@@ -18,11 +18,23 @@ const images = {
     bullet: new Image()
 };
 
-// Load images
+// Load images with error handling
 images.stitch.src = 'images/stitch.png';
-images.alien.src = 'images/alien.png';
+images.alien.src = 'images/aliens.png'; // Changed from alien.png to aliens.png
 images.heart.src = 'images/heart.png';
 images.bullet.src = 'images/bullet.png';
+
+// Add error handling for image loading
+images.stitch.onerror = () => console.error('Stitch image failed to load');
+images.alien.onerror = () => console.error('Alien image failed to load');
+images.heart.onerror = () => console.error('Heart image failed to load');
+images.bullet.onerror = () => console.error('Bullet image failed to load');
+
+// Add success logging
+images.stitch.onload = () => console.log('Stitch image loaded successfully');
+images.alien.onload = () => console.log('Alien image loaded successfully');
+images.heart.onload = () => console.log('Heart image loaded successfully');
+images.bullet.onload = () => console.log('Bullet image loaded successfully');
 
 // Game state
 let gameRunning = true;
@@ -179,3 +191,4 @@ document.addEventListener('keyup', (e) => {
 window.addEventListener('load', () => {
     gameLoop();
 });
+
